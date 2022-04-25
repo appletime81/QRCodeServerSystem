@@ -11,5 +11,5 @@ def main(*args):
     global _top1, _w1
     _top1 = root
     _w1 = m.Toplevel1(_top1)
-    _w1.iniciar()
+    # _w1.iniciar()
     root.mainloop()
