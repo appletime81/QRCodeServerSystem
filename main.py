@@ -26,7 +26,7 @@ class Toplevel1:
         _ana1color = '#d9d9d9'  # X11 color: 'gray85'
         _ana2color = '#ececec'  # Closest X11 color: 'gray92'
 
-        top.geometry("1280x800+2363+183")
+        top.geometry("1280x800+0+0")
         top.minsize(120, 1)
         top.maxsize(1280, 800)
         top.resizable(1, 1)
