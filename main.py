@@ -16,6 +16,7 @@ import cv2
 import main_support
 from pyzbar.pyzbar import decode
 
+
 class Toplevel1:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -241,8 +242,6 @@ class Toplevel1:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 frame = cv2.flip(frame, 1)
 
-
-
                 # read qr code
                 for barcode in decode(frame):
                     result = barcode.data.decode("utf-8")
@@ -250,8 +249,8 @@ class Toplevel1:
                     pts = np.array([barcode.polygon], np.int32)
                     pts = pts.reshape((-1, 1, 2))
                     cv2.polylines(frame, [pts], True, (0, 255, 0), 5)
-                    cv2.putText(frame, result, (barcode.rect[0], barcode.rect[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-
+                    cv2.putText(frame, result, (barcode.rect[0], barcode.rect[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.9,
+                                (0, 255, 0), 2)
 
                 img = Image.fromarray(frame)
                 imgtk = ImageTk.PhotoImage(image=img)
@@ -308,7 +307,7 @@ def display(im, bbox):
 
 def start_up():
     main_support.main()
-
+    
 
 if __name__ == "__main__":
     main_support.main()
