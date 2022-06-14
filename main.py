@@ -307,7 +307,7 @@ def display(im, bbox):
 
 def start_up():
     main_support.main()
-    
+
 
 if __name__ == "__main__":
     main_support.main()
