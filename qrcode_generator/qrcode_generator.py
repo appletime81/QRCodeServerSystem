@@ -3,7 +3,7 @@ import tkinter as tk
 import qrcode_generator_support
 
 from PIL import ImageTk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 
 class QRCodeGenerator:
@@ -93,7 +93,6 @@ class QRCodeGenerator:
 
         self.Text1 = tk.Text(self.top)
         self.Text1.place(relx=0.554, rely=0.149, relheight=0.493, relwidth=0.312)
-
         self.Text1.configure(background="white")
         self.Text1.configure(font="TkTextFont")
         self.Text1.configure(foreground="black")
@@ -103,7 +102,13 @@ class QRCodeGenerator:
         self.Text1.configure(selectbackground="#c4c4c4")
         self.Text1.configure(selectforeground="black")
         self.Text1.configure(wrap="word")
+
+        # init parameter
+        self.qr_image = None
+
+        # bind button to function
         self.generate_btn.configure(command=self.generate_qrcode)
+        self.save_btn.configure(command=self.save_qrcode)
 
     def generate_qrcode(self):
         # clear label image
@@ -127,11 +132,24 @@ class QRCodeGenerator:
         # set qr on label
         qr.add_data(info)
         qr.make(fit=True)
+        self.qr_image = qr.make_image()
         img = ImageTk.PhotoImage(qr.make_image().get_image().resize((407, 378)))
         self.Label1.configure(image=img)
         self.Label1.image = img
         self.Label1.pack()
         self.Label1.place(relx=0.5, rely=0.5, width=407, height=378, anchor="center")
+
+    def save_qrcode(self):
+        try:
+            filename = filedialog.asksaveasfilename(
+                defaultextension=".png", filetypes=[("PNG", "*.png")]
+            )
+            if filename == "":
+                return
+            self.qr_image.save(filename)
+            messagebox.showinfo("成功", "QRCode已儲存")
+        except:
+            messagebox.showerror("錯誤", "QRCode儲存失敗")
 
 
 def start_up():
