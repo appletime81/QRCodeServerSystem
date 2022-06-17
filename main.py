@@ -179,7 +179,7 @@ class Toplevel1:
         self.Label1.configure(highlightbackground="#d9d9d9")
         self.Label1.configure(highlightcolor="black")
         self.Label1.configure(relief="ridge")
-        self.Label1.configure(text="""Label""")
+        self.Label1.configure(text="""""")
 
         self.Button1 = tk.Button(self.top)
         self.Button1.place(relx=0.055, rely=0.2, height=34, width=128)
