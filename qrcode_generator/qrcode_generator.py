@@ -6,71 +6,80 @@ from PIL import ImageTk
 from tkinter import messagebox, filedialog
 
 
+import sys
+import tkinter as tk
+import tkinter.ttk as ttk
+from tkinter.constants import *
+
+import qrcode_generator_support
+
 class QRCodeGenerator:
     def __init__(self, top=None):
-        """This class configures and populates the toplevel window.
-        top is the toplevel containing window."""
-        _bgcolor = "#d9d9d9"  # X11 color: 'gray85'
-        _fgcolor = "#000000"  # X11 color: 'black'
-        _compcolor = "gray40"  # X11 color: #666666
-        _ana1color = "#c3c3c3"  # Closest X11 color: 'gray76'
-        _ana2color = "beige"  # X11 color: #f5f5dc
-        _tabfg1 = "black"
-        _tabfg2 = "black"
-        _tabbg1 = "grey75"
-        _tabbg2 = "grey89"
-        _bgmode = "light"
+        '''This class configures and populates the toplevel window.
+           top is the toplevel containing window.'''
+        _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
+        _fgcolor = '#000000'  # X11 color: 'black'
+        _compcolor = 'gray40' # X11 color: #666666
+        _ana1color = '#c3c3c3' # Closest X11 color: 'gray76'
+        _ana2color = 'beige' # X11 color: #f5f5dc
+        _tabfg1 = 'black'
+        _tabfg2 = 'black'
+        _tabbg1 = 'grey75'
+        _tabbg2 = 'grey89'
+        _bgmode = 'light'
 
         top.geometry("1046x738+425+106")
         top.minsize(120, 1)
         top.maxsize(1046, 738)
-        top.resizable(1, 1)
+        top.resizable(1,  1)
         top.title("QRCode產生器")
         top.configure(background="#d9d9d9")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
 
         self.top = top
+        self.che46 = tk.IntVar()
 
         self.generate_btn = tk.Button(self.top)
         self.generate_btn.place(relx=0.545, rely=0.054, height=44, width=168)
         self.generate_btn.configure(activebackground="beige")
         self.generate_btn.configure(activeforeground="#000000")
         self.generate_btn.configure(background="#d9d9d9")
-        self.generate_btn.configure(compound="center")
+        self.generate_btn.configure(compound='center')
         self.generate_btn.configure(disabledforeground="#a3a3a3")
         self.generate_btn.configure(font="-family {微軟正黑體} -size 19 -weight bold")
         self.generate_btn.configure(foreground="#000000")
         self.generate_btn.configure(highlightbackground="#d9d9d9")
         self.generate_btn.configure(highlightcolor="black")
-        photo_location = "button001.png"
+        photo_location = "../Users/apple/Desktop/temp/button001.png"
         global _img0
-        _img0 = tk.PhotoImage(file=photo_location)
+        _img0 = tk.PhotoImage(file="button001.png")
         self.generate_btn.configure(image=_img0)
         self.generate_btn.configure(pady="0")
-        self.generate_btn.configure(text="""生成QRCode""")
+        self.generate_btn.configure(text='''生成QRCode''')
 
         self.save_btn = tk.Button(self.top)
         self.save_btn.place(relx=0.707, rely=0.054, height=44, width=168)
         self.save_btn.configure(activebackground="beige")
         self.save_btn.configure(activeforeground="#000000")
         self.save_btn.configure(background="#d9d9d9")
-        self.save_btn.configure(compound="center")
+        self.save_btn.configure(compound='center')
         self.save_btn.configure(disabledforeground="#a3a3a3")
         self.save_btn.configure(font="-family {微軟正黑體} -size 19 -weight bold")
         self.save_btn.configure(foreground="#000000")
         self.save_btn.configure(highlightbackground="#d9d9d9")
         self.save_btn.configure(highlightcolor="black")
-        photo_location = "button002.png"
+        photo_location = "../Users/apple/Desktop/temp/button002.png"
         global _img1
-        _img1 = tk.PhotoImage(file=photo_location)
+        _img1 = tk.PhotoImage(file="button002.png")
         self.save_btn.configure(image=_img1)
         self.save_btn.configure(pady="0")
-        self.save_btn.configure(text="""儲存檔案""")
+        self.save_btn.configure(text='''儲存檔案''')
 
         self.Frame1 = tk.Frame(self.top)
-        self.Frame1.place(relx=0.057, rely=0.054, relheight=0.584, relwidth=0.446)
-        self.Frame1.configure(relief="groove")
+        self.Frame1.place(relx=0.057, rely=0.054, relheight=0.584
+                , relwidth=0.446)
+        self.Frame1.configure(relief='groove')
         self.Frame1.configure(borderwidth="2")
         self.Frame1.configure(relief="groove")
         self.Frame1.configure(background="#d9d9d9")
@@ -80,19 +89,20 @@ class QRCodeGenerator:
         self.Label1 = tk.Label(self.Frame1)
         self.Label1.place(relx=0.064, rely=0.07, height=378, width=407)
         self.Label1.configure(activebackground="#f9f9f9")
-        self.Label1.configure(anchor="w")
+        self.Label1.configure(anchor='w')
         self.Label1.configure(background="#d9d9d9")
-        self.Label1.configure(compound="left")
+        self.Label1.configure(compound='left')
         self.Label1.configure(disabledforeground="#a3a3a3")
         self.Label1.configure(foreground="#000000")
         self.Label1.configure(highlightbackground="#d9d9d9")
         self.Label1.configure(highlightcolor="black")
 
-        self.menubar = tk.Menu(top, font="TkMenuFont", bg=_bgcolor, fg=_fgcolor)
-        top.configure(menu=self.menubar)
+        self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
+        top.configure(menu = self.menubar)
 
         self.Text1 = tk.Text(self.top)
-        self.Text1.place(relx=0.554, rely=0.149, relheight=0.493, relwidth=0.312)
+        self.Text1.place(relx=0.545, rely=0.203, relheight=0.493, relwidth=0.315)
+
         self.Text1.configure(background="white")
         self.Text1.configure(font="TkTextFont")
         self.Text1.configure(foreground="black")
@@ -102,6 +112,24 @@ class QRCodeGenerator:
         self.Text1.configure(selectbackground="#c4c4c4")
         self.Text1.configure(selectforeground="black")
         self.Text1.configure(wrap="word")
+
+        self.Checkbutton1 = tk.Checkbutton(self.top)
+        self.Checkbutton1.place(relx=0.631, rely=0.149, relheight=0.034
+                , relwidth=0.134)
+        self.Checkbutton1.configure(activebackground="beige")
+        self.Checkbutton1.configure(activeforeground="#000000")
+        self.Checkbutton1.configure(anchor='w')
+        self.Checkbutton1.configure(background="#d9d9d9")
+        self.Checkbutton1.configure(compound='left')
+        self.Checkbutton1.configure(disabledforeground="#a3a3a3")
+        self.Checkbutton1.configure(font="-family {微軟正黑體} -size 14 -weight bold")
+        self.Checkbutton1.configure(foreground="#000000")
+        self.Checkbutton1.configure(highlightbackground="#d9d9d9")
+        self.Checkbutton1.configure(highlightcolor="black")
+        self.Checkbutton1.configure(justify='left')
+        self.Checkbutton1.configure(selectcolor="#d9d9d9")
+        self.Checkbutton1.configure(text='''是否含中文''')
+        self.Checkbutton1.configure(variable=self.che46)
 
         # init parameter
         self.qr_image = None
@@ -129,8 +157,12 @@ class QRCodeGenerator:
             border=4,
         )
 
+        # check checkbutton if it is checked
+        if self.che46.get() == 1:
+            info = "，" + info
+
         # set qr on label
-        qr.add_data(info)
+        qr.add_data(info.encode("utf-8"))
         qr.make(fit=True)
         self.qr_image = qr.make_image()
         img = ImageTk.PhotoImage(qr.make_image().get_image().resize((407, 378)))
